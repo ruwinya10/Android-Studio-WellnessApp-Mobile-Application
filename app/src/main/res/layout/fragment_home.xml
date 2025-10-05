@@ -1,282 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="#F8F9FA">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!-- Top Bar -->
+    <ImageView
+        android:id="@+id/ivMenu"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:padding="4dp"
+        app:srcCompat="@drawable/menubar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <!-- Completion Card -->
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:padding="4dp"
+        app:srcCompat="@drawable/searchbar"
+        app:layout_constraintStart_toEndOf="@id/ivMenu"
+        app:layout_constraintEnd_toStartOf="@id/ivLogo"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        app:srcCompat="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ivMenu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:background="@drawable/card_background"
-            android:elevation="4dp"
-            android:gravity="center">
+            android:padding="16dp">
+
+            <!-- Greeting Texts -->
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello "
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-medium"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvWelcome"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Today's Progress"
+                android:text="Welcome to WellNest"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Completion Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today's Progress"
+                    android:textColor="#240C50"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_completion_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="0%"
+                    android:textColor="#644495"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_completion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Start adding habits to track your progress!"
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="16dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="#644495" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Weekly Mood Trend"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#240C50" />
+                android:textColor="#240C50"
+                android:gravity="center"
+                android:layout_marginTop="24dp" />
 
-            <TextView
-                android:id="@+id/tv_completion_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="0%"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:textColor="#644495" />
-
-            <TextView
-                android:id="@+id/tv_completion_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Start adding habits to track your progress!"
-                android:textSize="14sp"
-                android:textColor="#666"
-                android:gravity="center" />
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart_mood_trend"
                 android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="16dp"
-                android:progress="0"
-                android:max="100"
-                android:progressTint="#644495" />
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp" />
 
-        </LinearLayout>
-
-        <!-- Features Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="App Features"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#240C50"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Habit Tracking Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@drawable/card_background"
-            android:elevation="2dp"
-            android:layout_marginBottom="12dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_habit"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <!-- Features Section -->
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:text="App Features"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#240C50"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Habit Tracking"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#240C50" />
+            <!-- Habit Tracking Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="@drawable/card_background"
+                android:elevation="2dp"
+                android:layout_marginBottom="8dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Track your daily wellness habits and build healthy routines"
-                    android:textSize="14sp"
-                    android:textColor="#666"
-                    android:layout_marginTop="4dp" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_habit" />
 
-                <Button
-                    android:id="@+id/btn_view_habits"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="View Habits"
-                    android:textAllCaps="false"
-                    android:backgroundTint="#644495"
-                    android:textColor="@android:color/white" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Habit Tracking"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#240C50" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Track your daily wellness habits and build healthy routines"
+                        android:textSize="13sp"
+                        android:textColor="#666"
+                        android:layout_marginTop="4dp" />
+
+                    <Button
+                        android:id="@+id/btn_view_habits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:text="View Habits"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:backgroundTint="#644495"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Mood Journal Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="@drawable/card_background"
+                android:elevation="2dp"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_mood" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mood Journal"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#240C50" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Log your daily mood with emojis and track your emotional wellness"
+                        android:textSize="13sp"
+                        android:textColor="#666"
+                        android:layout_marginTop="4dp" />
+
+                    <Button
+                        android:id="@+id/btn_log_mood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Log Mood"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:backgroundTint="#644495"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Step Tracking Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="@drawable/card_background"
+                android:elevation="2dp"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_steps" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Step Counter"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#240C50" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Track your daily steps and stay active with built-in sensors"
+                        android:textSize="13sp"
+                        android:textColor="#666"
+                        android:layout_marginTop="4dp" />
+
+                    <Button
+                        android:id="@+id/btn_track_steps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Track Steps"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:backgroundTint="#644495"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Hydration Reminder Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="@drawable/card_background"
+                android:elevation="2dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_water" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hydration Reminders"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#240C50" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Set customizable reminders to drink water and stay hydrated"
+                        android:textSize="13sp"
+                        android:textColor="#666"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Configure in Settings"
+                        android:textSize="12sp"
+                        android:textColor="#644495"
+                        android:textStyle="italic"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Mood Journal Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@drawable/card_background"
-            android:elevation="2dp"
-            android:layout_marginBottom="12dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_mood"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mood Journal"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#240C50" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Log your daily mood with emojis and track your emotional wellness"
-                    android:textSize="14sp"
-                    android:textColor="#666"
-                    android:layout_marginTop="4dp" />
-
-                <Button
-                    android:id="@+id/btn_log_mood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Log Mood"
-                    android:textAllCaps="false"
-                    android:backgroundTint="#644495"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Step Tracking Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@drawable/card_background"
-            android:elevation="2dp"
-            android:layout_marginBottom="12dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_steps"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Step Counter"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#240C50" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Track your daily steps and stay active with built-in sensors"
-                    android:textSize="14sp"
-                    android:textColor="#666"
-                    android:layout_marginTop="4dp" />
-
-                <Button
-                    android:id="@+id/btn_track_steps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Track Steps"
-                    android:textAllCaps="false"
-                    android:backgroundTint="#644495"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Hydration Reminder Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="@drawable/card_background"
-            android:elevation="2dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_water"
-                android:layout_marginEnd="16dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Hydration Reminders"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#240C50" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Set customizable reminders to drink water and stay hydrated"
-                    android:textSize="14sp"
-                    android:textColor="#666"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Configure in Settings"
-                    android:textSize="12sp"
-                    android:textColor="#644495"
-                    android:textStyle="italic"
-                    android:layout_marginTop="4dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

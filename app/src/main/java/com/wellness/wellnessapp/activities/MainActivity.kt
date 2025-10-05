@@ -4,8 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.wellness.wellnessapp.R
 import com.wellness.wellnessapp.fragments.HabitFragment
 import com.wellness.wellnessapp.fragments.HomeFragment
@@ -16,7 +17,6 @@ import com.wellness.wellnessapp.utils.AuthManager
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var authManager: AuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,38 +30,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        bottomNavigation = findViewById(R.id.bottom_navigation)
+        val homeIcon: ImageView = findViewById(R.id.homeIcon)
+        val habitsIcon: ImageView = findViewById(R.id.habitsIcon)
+        val moodIcon: ImageView = findViewById(R.id.moodIcon)
+        val stepsIcon: ImageView = findViewById(R.id.stepsIcon)
+        val settingsIcon: ImageView = findViewById(R.id.settingsIcon)
 
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-                R.id.nav_habits -> {
-                    replaceFragment(HabitFragment())
-                    true
-                }
-                R.id.nav_mood -> {
-                    replaceFragment(MoodFragment())
-                    true
-                }
-                R.id.nav_steps -> {
-                    replaceFragment(StepCounterFragment())
-                    true
-                }
-                R.id.nav_settings -> {
-                    replaceFragment(SettingsFragment())
-                    true
-                }
-                else -> false
-            }
+        homeIcon.setOnClickListener {
+            replaceFragment(HomeFragment())
+        }
+
+        habitsIcon.setOnClickListener {
+            replaceFragment(HabitFragment())
+        }
+
+        moodIcon.setOnClickListener {
+            replaceFragment(MoodFragment())
+        }
+
+        stepsIcon.setOnClickListener {
+            replaceFragment(StepCounterFragment())
+        }
+
+        settingsIcon.setOnClickListener {
+            replaceFragment(SettingsFragment())
         }
     }
 
     private fun loadInitialFragment() {
         replaceFragment(HomeFragment())
-        bottomNavigation.selectedItemId = R.id.nav_home
     }
 
     private fun replaceFragment(fragment: androidx.fragment.app.Fragment) {
@@ -73,17 +70,14 @@ class MainActivity : AppCompatActivity() {
     // Navigation methods for home fragment buttons
     fun navigateToHabits() {
         replaceFragment(HabitFragment())
-        bottomNavigation.selectedItemId = R.id.nav_habits
     }
 
     fun navigateToMood() {
         replaceFragment(MoodFragment())
-        bottomNavigation.selectedItemId = R.id.nav_mood
     }
 
     fun navigateToSteps() {
         replaceFragment(StepCounterFragment())
-        bottomNavigation.selectedItemId = R.id.nav_steps
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
