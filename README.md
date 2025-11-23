@@ -133,4 +133,14 @@ No external database is required.
 ## 📄 License
 
 This project is developed for academic purposes as part of:
+IT2010 – Mobile Application Development
+BSc (Hons) in Information Technology
+2nd Year – SLIIT
+
+
+---
+
+<div align="center">
+  <img src="https://img.shields.io/badge/WellNest-Healthy%20Habits%20Start%20Here-green?style=flat-square" />
+</div>
 
