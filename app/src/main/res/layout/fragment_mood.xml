@@ -1,90 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/card_background"
-        android:elevation="4dp">
+        android:padding="16dp">
 
         <TextView
+            android:id="@+id/title_mood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log Your Mood"
-            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:text="@string/mood_journal_title"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:textColor="#240C50"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@drawable/card_background"
+            android:elevation="4dp"
+            android:layout_marginTop="12dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mood: "
-                android:textSize="16sp"
-                android:layout_marginEnd="8dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <Spinner
-                android:id="@+id/spinner_emojis"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mood_spinner"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp"/>
+
+                <Spinner
+                    android:id="@+id/spinner_emojis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_mood_notes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginTop="12dp"
+                android:hint="@string/add_notes"
+                android:inputType="textMultiLine"
+                android:minHeight="80dp"/>
+
+            <Button
+                android:id="@+id/btn_log_mood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/log_mood1"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/btn_share_mood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/share_latest_mood"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/colorAccent"/>
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_mood_notes"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Add notes (optional)"
-            android:inputType="textMultiLine"
-            android:minHeight="100dp" />
+            android:text="@string/mood_history"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"/>
 
-        <Button
-            android:id="@+id/btn_log_mood"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_mood_entries"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Log Mood"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/colorPrimary" />
-
-        <Button
-            android:id="@+id/btn_share_mood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Share Latest Mood"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/colorAccent" />
+            android:layout_height="300dp"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mood History"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_mood_entries"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-</LinearLayout>
+</ScrollView>

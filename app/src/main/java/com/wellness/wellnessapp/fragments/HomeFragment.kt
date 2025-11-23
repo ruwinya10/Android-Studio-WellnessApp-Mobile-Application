@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -20,18 +21,20 @@ import com.wellness.wellnessapp.models.Habit
 import com.wellness.wellnessapp.models.MoodEntry
 import com.wellness.wellnessapp.utils.AuthManager
 import com.wellness.wellnessapp.utils.SharedPrefManager
+import com.wellness.wellnessapp.widget.HabitCompletionWidgetProvider
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var sharedPrefManager: SharedPrefManager
     private lateinit var tvCompletionPercentage: TextView
     private lateinit var tvCompletionText: TextView
+    private lateinit var progressCompletion: ProgressBar
     private lateinit var btnViewHabits: Button
     private lateinit var btnLogMood: Button
-    private lateinit var btnTrackSteps: Button
     private lateinit var chart: LineChart
 
     // New views
@@ -54,18 +57,9 @@ class HomeFragment : Fragment() {
         val username = authManager.getCurrentUser().ifBlank { "User" }
         tvGreeting.text = "Hello $username"
 
-        // --- menu icon opens MenuFragment (safe, checks ivMenu exist) ---
+        // --- menu icon opens side drawer ---
         ivMenu?.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right,
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
-                .replace(R.id.fragment_container, MenuFragment())
-                .addToBackStack(null)
-                .commit()
+            (requireActivity() as? MainActivity)?.openDrawer()
         }
 
         updateCompletionPercentage()
@@ -73,20 +67,22 @@ class HomeFragment : Fragment() {
         setupMoodTrendChart()
     }
 
+    // Initialize all view references
     private fun initViews(view: View) {
         tvCompletionPercentage = view.findViewById(R.id.tv_completion_percentage)
         tvCompletionText = view.findViewById(R.id.tv_completion_text)
+        progressCompletion = view.findViewById(R.id.progress_completion)
         btnViewHabits = view.findViewById(R.id.btn_view_habits)
         btnLogMood = view.findViewById(R.id.btn_log_mood)
-        btnTrackSteps = view.findViewById(R.id.btn_track_steps)
         chart = view.findViewById(R.id.chart_mood_trend)
 
         // new views from the updated layout (ids must match your fragment_home.xml)
-        tvGreeting = view.findViewById(R.id.tvGreeting)            // "Hello <user>"
-        tvWelcome = view.findViewById(R.id.tvWelcome)              // "Welcome to WellNest"
-        ivMenu = view.findViewById(R.id.ivMenu) ?: view.findViewById(R.id.ivMenu)
+        tvGreeting = view.findViewById(R.id.tvGreeting)
+        tvWelcome = view.findViewById(R.id.tvWelcome)
+        ivMenu = view.findViewById(R.id.ivMenu)
     }
 
+    // ✅ Merged function – updates UI + widget
     private fun updateCompletionPercentage() {
         val habits: List<Habit> = sharedPrefManager.getHabits()
         val totalHabits = habits.size
@@ -95,25 +91,36 @@ class HomeFragment : Fragment() {
 
         tvCompletionPercentage.text = "$progress%"
         tvCompletionText.text = "You've completed $completedHabits out of $totalHabits habits today"
+        progressCompletion.max = 100
+        progressCompletion.progress = progress
+
+        // 🔁 Also refresh the home screen widget
+        HabitCompletionWidgetProvider.refreshAllWidgets(requireContext())
     }
 
+    // Handles all button and card clicks
     private fun setupClickListeners() {
+        view?.findViewById<View>(R.id.card_completion)?.setOnClickListener {
+            (requireActivity() as? MainActivity)?.navigateToHabits()
+        }
+        chart.setOnClickListener {
+            (requireActivity() as? MainActivity)?.navigateToMood()
+        }
+
         btnViewHabits.setOnClickListener {
-            // Navigate to habits fragment
             (requireActivity() as? MainActivity)?.navigateToHabits()
         }
 
         btnLogMood.setOnClickListener {
-            // Navigate to mood fragment
             (requireActivity() as? MainActivity)?.navigateToMood()
         }
 
-        btnTrackSteps.setOnClickListener {
-            // Navigate to steps fragment
-            (requireActivity() as? MainActivity)?.navigateToSteps()
+        view?.findViewById<View>(R.id.btn_set_reminder)?.setOnClickListener {
+            (requireActivity() as? MainActivity)?.navigateToSettings()
         }
     }
 
+    // Prepares and styles mood trend chart
     private fun setupMoodTrendChart() {
         val moodEntries: List<MoodEntry> = sharedPrefManager.getMoodEntries()
 
@@ -121,23 +128,22 @@ class HomeFragment : Fragment() {
         val entries = ArrayList<Entry>()
         val dayLabels = arrayOf("6d", "5d", "4d", "3d", "2d", "Yest", "Today")
 
-        // Fill chart entries with Float indices
         for (i in 0..6) {
             val avg: Float = dailyAverages[i] ?: 0f
-            entries.add(Entry(i.toFloat(), avg)) // i.toFloat() ensures type match
+            entries.add(Entry(i.toFloat(), avg))
         }
 
         val dataSet = LineDataSet(entries, "Mood Trend").apply {
             color = android.graphics.Color.parseColor("#7B4CBB")
             lineWidth = 3f
             mode = LineDataSet.Mode.CUBIC_BEZIER
+            valueTextSize = 15f
 
             setDrawCircles(true)
             circleRadius = 5f
             setCircleColor(android.graphics.Color.parseColor("#7B4CBB"))
             circleHoleColor = android.graphics.Color.WHITE
 
-            // Enable emoji labels
             setDrawValues(true)
             valueFormatter = object : com.github.mikephil.charting.formatter.ValueFormatter() {
                 override fun getPointLabel(entry: Entry?): String {
@@ -145,10 +151,8 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            // Gradient fill
             setDrawFilled(true)
             fillDrawable = resources.getDrawable(R.drawable.chart_gradient, null)
-
             highLightColor = android.graphics.Color.parseColor("#9F7AEA")
             setDrawHighlightIndicators(false)
         }
@@ -156,7 +160,6 @@ class HomeFragment : Fragment() {
         val lineData = LineData(dataSet)
         chart.data = lineData
 
-        // Chart styling
         chart.description.isEnabled = false
         chart.setTouchEnabled(true)
         chart.isDragEnabled = true
@@ -168,7 +171,6 @@ class HomeFragment : Fragment() {
         chart.setNoDataTextColor(android.graphics.Color.GRAY)
         chart.animateX(1200)
 
-        // X-Axis
         val xAxis = chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.valueFormatter = IndexAxisValueFormatter(dayLabels)
@@ -179,7 +181,6 @@ class HomeFragment : Fragment() {
         xAxis.labelRotationAngle = -15f
         xAxis.yOffset = 8f
 
-        // Y-Axis
         chart.axisRight.isEnabled = false
         val yAxis = chart.axisLeft
         yAxis.textColor = android.graphics.Color.parseColor("#301934")
@@ -189,7 +190,7 @@ class HomeFragment : Fragment() {
         yAxis.axisMinimum = 0f
         yAxis.axisMaximum = 5f
 
-        chart.legend.isEnabled = false
+        chart.legend.isEnabled = true
         chart.invalidate()
     }
 
@@ -209,7 +210,7 @@ class HomeFragment : Fragment() {
         val today = Date()
         val todayCal = Calendar.getInstance().apply { time = today }
         val sevenDaysAgoCal = Calendar.getInstance().apply { timeInMillis = todayCal.timeInMillis }
-        sevenDaysAgoCal.add(Calendar.DAY_OF_YEAR, -6) // 6 days ago to today = 7 days
+        sevenDaysAgoCal.add(Calendar.DAY_OF_YEAR, -6)
 
         val dailyScores = mutableMapOf<String, MutableList<Float>>()
 
@@ -224,9 +225,7 @@ class HomeFragment : Fragment() {
                         dailyScores.getOrPut(dayKey) { mutableListOf() }.add(score)
                     }
                 }
-            } catch (e: Exception) {
-                // Handle parse error
-            }
+            } catch (e: Exception) { }
         }
 
         val averages = mutableMapOf<Int, Float?>()

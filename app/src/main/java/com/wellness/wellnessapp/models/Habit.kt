@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 data class Habit(
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),  //Creates a unique ID for each habit
     val name: String,
     val description: String,
     val targetCount: Int,

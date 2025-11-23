@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.work:work-runtime-ktx:2.8.1")

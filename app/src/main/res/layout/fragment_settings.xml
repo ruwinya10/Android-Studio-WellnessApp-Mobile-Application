@@ -2,12 +2,78 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hydration_reminders_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="#240C50"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:background="@drawable/card_new_background"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/enable_reminders"
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/switch_reminders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder_interval"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:background="@drawable/card_new_background"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/text_interval_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/_60_minutes"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_set_interval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_interval" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,71 +81,36 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:background="@drawable/card_background"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            android:layout_marginTop="24dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hydration Reminders"
+                android:text="@string/did_you_know"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="16dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Enable Reminders"
-                    android:textSize="16sp" />
-
-                <Switch
-                    android:id="@+id/switch_reminders"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+                android:layout_marginBottom="12dp"
+                android:textColor="#240C50"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Reminder Interval"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp" />
-
-            <SeekBar
-                android:id="@+id/seekbar_interval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:max="7" />
-
-            <TextView
-                android:id="@+id/text_interval_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="60 minutes"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_marginTop="8dp" />
+                android:text="@string/did_u_know_desc"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/txt_color5" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Settings will be automatically saved"
-            android:textSize="14sp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:gravity="center"
-            android:layout_marginTop="16dp" />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Hydration illustration"
+            android:src="@drawable/ic_water_bottle" />
 
     </LinearLayout>
-
 </ScrollView>

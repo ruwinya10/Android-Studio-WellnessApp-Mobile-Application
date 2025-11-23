@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Today's Progress"
+        android:text="@string/today_s_progress_widget"
         android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="#240C50" />
@@ -20,18 +20,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="0%"
+        android:text="@string/percenatge2"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#644495" />
+        android:textColor="@color/txt_color3" />
 
     <TextView
         android:id="@+id/widget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0/0 habits"
+        android:text="@string/_0_0_habits"
         android:textSize="12sp"
-        android:textColor="#666" />
+        android:textColor="@color/text_color2" />
 
     <ProgressBar
         android:id="@+id/widget_progress"
@@ -41,6 +41,6 @@
         android:layout_marginTop="8dp"
         android:progress="0"
         android:max="100"
-        android:progressTint="#644495" />
+        android:progressTint="@color/txt_color7" />
 
 </LinearLayout>

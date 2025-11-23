@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/card_background"
+    android:background="@drawable/card_new_background"
     android:layout_marginBottom="8dp"
     android:elevation="2dp">
 
@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Happy"
+            android:text="@string/happy"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:id="@+id/tv_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2024-01-01 12:00"
+            android:text="@string/date_time"
             android:textSize="12sp"
             android:textColor="?android:attr/textColorSecondary" />
 
@@ -45,7 +45,7 @@
         android:id="@+id/tv_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notes will appear here"
+        android:text="@string/notes_will_appear_here"
         android:textSize="14sp"
         android:layout_marginTop="4dp" />
 

@@ -47,18 +47,21 @@ class MoodFragment : Fragment() {
         setupShareButton()
     }
 
+    // Sets up RecyclerView and its adapter
     private fun setupRecyclerView() {
         adapter = MoodAdapter(moodEntries)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    // Loads saved mood entries from SharedPreferences
     private fun loadMoodEntries() {
         moodEntries.clear()
         moodEntries.addAll(sharedPrefManager.getMoodEntries())
         adapter.notifyDataSetChanged()
     }
 
+    // Populates emoji spinner and sets log button functionality
     private fun setupEmojiSelector() {
         val emojiAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, emojis)
         emojiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -83,6 +86,7 @@ class MoodFragment : Fragment() {
         }
     }
 
+    // Maps each emoji to a mood description
     private fun getMoodText(emoji: String): String {
         return when (emoji) {
             "😊" -> "Happy"
@@ -99,6 +103,7 @@ class MoodFragment : Fragment() {
         }
     }
 
+    // Prepares share button logic for mood sharing
     private fun setupShareButton() {
         btnShareMood.setOnClickListener {
             if (moodEntries.isNotEmpty()) {

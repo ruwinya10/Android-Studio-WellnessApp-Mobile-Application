@@ -55,17 +55,20 @@ class SharedPrefManager(private val context: Context) {
         return gson.fromJson(json, type) ?: emptyList()
     }
 
+    //Private helper to save a user’s habit list
     private fun saveHabitsForUser(username: String, habits: List<Habit>) {
         val json = gson.toJson(habits)
         sharedPref.edit().putString("habits_$username", json).apply()
     }
 
+    //Private helper to load a user’s mood entries
     private fun getMoodEntriesForUser(username: String): List<MoodEntry> {
         val json = sharedPref.getString("mood_entries_$username", "[]") ?: "[]"
         val type = object : TypeToken<List<MoodEntry>>() {}.type
         return gson.fromJson(json, type) ?: emptyList()
     }
 
+    //Private helper to save a user’s mood entries
     private fun saveMoodEntriesForUser(username: String, entries: List<MoodEntry>) {
         val json = gson.toJson(entries)
         sharedPref.edit().putString("mood_entries_$username", json).apply()
@@ -73,26 +76,22 @@ class SharedPrefManager(private val context: Context) {
 
     // Settings methods (can be global or user-specific)
     fun setHydrationInterval(minutes: Int) {
-        val currentUser = authManager.getCurrentUser()
-        val key = if (currentUser.isNotEmpty()) "hydration_interval_$currentUser" else "hydration_interval"
-        sharedPref.edit().putInt(key, minutes).apply()
+        sharedPref.edit().putInt("hydration_interval", minutes).apply()
     }
 
+    //Function to retrieve the saved hydration interval
     fun getHydrationInterval(): Int {
-        val currentUser = authManager.getCurrentUser()
-        val key = if (currentUser.isNotEmpty()) "hydration_interval_$currentUser" else "hydration_interval"
-        return sharedPref.getInt(key, 60)
+        return sharedPref.getInt("hydration_interval", 60)
     }
 
+    //Function to enable or disable hydration reminders
     fun setRemindersEnabled(enabled: Boolean) {
-        val currentUser = authManager.getCurrentUser()
-        val key = if (currentUser.isNotEmpty()) "reminders_enabled_$currentUser" else "reminders_enabled"
-        sharedPref.edit().putBoolean(key, enabled).apply()
+        sharedPref.edit().putBoolean("reminders_enabled", enabled).apply()
     }
 
+    //Function to check if reminders are currently enabled
     fun areRemindersEnabled(): Boolean {
-        val currentUser = authManager.getCurrentUser()
-        val key = if (currentUser.isNotEmpty()) "reminders_enabled_$currentUser" else "reminders_enabled"
-        return sharedPref.getBoolean(key, true)
+        return sharedPref.getBoolean("reminders_enabled", true)
     }
+
 }

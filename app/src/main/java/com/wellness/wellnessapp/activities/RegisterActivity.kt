@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.wellness.wellnessapp.R
@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnRegister: Button
-    private lateinit var tvLogin: TextView
+    private lateinit var loginLayout: LinearLayout
     private lateinit var loading: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.password)
         etConfirmPassword = findViewById(R.id.confirm_password)
         btnRegister = findViewById(R.id.register)
-        tvLogin = findViewById(R.id.textView4)
+        loginLayout = findViewById(R.id.loginLayout)
         loading = findViewById(R.id.loading)
     }
 
@@ -44,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
             registerUser()
         }
 
-        tvLogin.setOnClickListener {
+        loginLayout.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

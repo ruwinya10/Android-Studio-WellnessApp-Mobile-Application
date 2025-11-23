@@ -34,10 +34,11 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        initViews()
-        setupClickListeners()
+        initViews()             // Initialize UI components
+        setupClickListeners()   // Set button click actions
     }
 
+    // Connect layout elements to Kotlin variables
     private fun initViews() {
         etUsername = findViewById(R.id.username)
         etPassword = findViewById(R.id.password)
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         loading = findViewById(R.id.loading)
     }
 
+    // Attach click listeners to buttons
     private fun setupClickListeners() {
         btnLogin.setOnClickListener {
             loginUser()
@@ -56,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Handles login logic with basic validation and simulated delay
     private fun loginUser() {
         val username = etUsername.text.toString().trim()
         val password = etPassword.text.toString().trim()
@@ -68,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         loading.visibility = ProgressBar.VISIBLE
         btnLogin.isEnabled = false
 
-        // Simulate login process
+        // Simulate network login delay
         Handler().postDelayed({
             if (authManager.login(username, password)) {
                 Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()

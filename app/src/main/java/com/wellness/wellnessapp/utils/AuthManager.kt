@@ -10,6 +10,7 @@ class AuthManager(private val context: Context) {
     private val sharedPref: SharedPreferences = context.getSharedPreferences("AuthPrefs", Context.MODE_PRIVATE)
     private val gson = Gson()
 
+    // Returns true if registration succeeds, false if the user already exists
     fun register(username: String, password: String): Boolean {
         // Check if username already exists
         if (sharedPref.contains("user_$username")) {
@@ -26,6 +27,7 @@ class AuthManager(private val context: Context) {
         return true
     }
 
+    // Function to log a user in using a username and password
     fun login(username: String, password: String): Boolean {
         val savedPassword = sharedPref.getString("user_$username", null)
         return if (savedPassword == password) {
@@ -38,29 +40,26 @@ class AuthManager(private val context: Context) {
         }
     }
 
+    //check if a user is currently logged in
     fun isLoggedIn(): Boolean {
         return sharedPref.getBoolean("isLoggedIn", false)
     }
 
+    //get the username of the currently logged-in user
     fun getCurrentUser(): String {
         return sharedPref.getString("currentUser", "") ?: ""
     }
 
+    //log the user out of the app
     fun logout() {
         sharedPref.edit().putBoolean("isLoggedIn", false).apply()
         sharedPref.edit().remove("currentUser").apply()
     }
 
-    // User-specific data methods
+    // Function to save a given user's list of habits
     fun saveHabitsForUser(username: String, habits: List<Habit>) {
         val json = gson.toJson(habits)
         sharedPref.edit().putString("habits_$username", json).apply()
-    }
-
-    fun getHabitsForUser(username: String): List<Habit> {
-        val json = sharedPref.getString("habits_$username", "[]") ?: "[]"
-        val type = com.google.gson.reflect.TypeToken.getParameterized(List::class.java, Habit::class.java).type
-        return gson.fromJson(json, type) ?: emptyList()
     }
 
     fun saveMoodEntriesForUser(username: String, entries: List<MoodEntry>) {
@@ -68,9 +67,4 @@ class AuthManager(private val context: Context) {
         sharedPref.edit().putString("mood_entries_$username", json).apply()
     }
 
-    fun getMoodEntriesForUser(username: String): List<MoodEntry> {
-        val json = sharedPref.getString("mood_entries_$username", "[]") ?: "[]"
-        val type = com.google.gson.reflect.TypeToken.getParameterized(List::class.java, MoodEntry::class.java).type
-        return gson.fromJson(json, type) ?: emptyList()
-    }
 }

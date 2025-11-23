@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background5">
+
+    <TextView
+        android:id="@+id/tv_widget_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/percentage1"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="@color/txt_color7" />
+
+    <TextView
+        android:id="@+id/tv_widget_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/habits_done_today"
+        android:textSize="12sp"
+        android:textColor="@color/txt_color6"
+        android:paddingTop="4dp" />
+</LinearLayout>
