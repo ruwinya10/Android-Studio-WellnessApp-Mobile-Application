@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="assets/logo.png" alt="Wellness App Logo" width="150" height="150" />
-</div>
-
 <h1 align="center">Wellness App – Daily Habit & Wellness Tracker</h1>
 
 <p align="center">
@@ -88,49 +84,6 @@ The app focuses on three core wellness pillars:
 
 ---
 
-## 📸 App Screenshots
-
-> Place screenshots inside a folder name `screenshots` in the repo, then reference them as below.
-
-<table>
-<tr>
-<td width="33%" align="center">
-
-### Home Screen  
-<img src="screenshots/home.png" width="250"/>
-
-</td>
-<td width="33%" align="center">
-
-### Mood Journal  
-<img src="screenshots/mood.png" width="250"/>
-
-</td>
-<td width="33%" align="center">
-
-### Hydration Tracking  
-<img src="screenshots/water.png" width="250"/>
-
-</td>
-</tr>
-</table>
-
----
-
-## 🧠 Future Improvements
-
-- Analytics charts  
-- Cloud sync  
-- Personalized suggestions  
-- Theme customization (Light/Dark)
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
 
 <div align="center">
   <img src="https://img.shields.io/badge/Wellness%20App-Healthy%20Habits%20Start%20Here-green?style=flat-square" />
